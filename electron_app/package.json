@@ -1,0 +1,46 @@
+{
+  "name": "ar_miner_ui_playground",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --publish=never"
+  },
+  "keywords": [],
+  "author": {
+    "name": "vird",
+    "email": "virdvip@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "fy": "github:hu2prod/fy",
+    "webcom": "github:hu2prod/webcom",
+    "webcom-client-plugin-base": "github:hu2prod/webcom-client-plugin-base",
+    "webcom-engine-vendor": "github:hu2prod/webcom-engine-vendor",
+    "iced-runtime": "^1.0.4",
+    "event_mixin": "github:hu2prod/event_mixin",
+    "minimist": "^1.2.6",
+    "dotenv-flow": "^3.2.0"
+  },
+  "devDependencies": {
+    "electron": "^26.3.0",
+    "electron-builder": "^24.6.4"
+  },
+  "main": "./main.js",
+  "homepage": "https://example.com",
+  "build": {
+    "directories": {
+      "output": "../electron_build"
+    },
+    "files": [
+      "**/*"
+    ],
+    "appId": "com.author.app_name",
+    "productName": "ar_miner_ui_playground",
+    "linux": {
+      "target": [
+        "deb"
+      ]
+    }
+  }
+}

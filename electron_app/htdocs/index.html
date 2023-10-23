@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+    
+    <title>ar_miner_ui_playground</title>
+    <style>
+      .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+      }
+      
+      .tab button {
+        background-color: inherit;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 2px 16px;
+        transition: 0.3s;
+      }
+      
+      .tab button:hover {
+        background-color: #ddd;
+      }
+      
+      .tab button.active {
+        background-color: #ccc;
+      }
+      
+      .table {
+        border-collapse:collapse; /* TODO move */
+      }
+      
+      .table>tbody>tr {
+        border: 1px solid #a2a9b1;
+        padding: 0.2em 0.4em;
+      }
+      
+      .table>tbody>tr>th {
+        border: 1px solid #a2a9b1;
+        padding: 0.2em 0.4em;
+        background-color: #eaecf0;
+      }
+      
+      .table>tbody>tr>td {
+        border: 1px solid #a2a9b1;
+        padding: 0.2em 0.4em;
+        background-color: #f8f9fa;
+      }
+      
+      .table>tbody>tr.selected>td {
+        background-color: #ffc;
+      }
+      
+      .table>tbody>tr>td.selected {
+        background-color: #ffc;
+      }
+      
+      .table>tbody>tr.selected>th {
+        background-color: #ffc;
+      }
+      
+      .table>tbody>tr>th.selected {
+        background-color: #ffc;
+      }
+      
+      .table>tbody>tr>th.sort {
+        background-image: url(/_layout/table/sort_both.png);
+        background-image: linear-gradient(transparent,transparent),url(data:image/svg+xml,<%3Fxml%20version%3D"1.0"%20encoding%3D"UTF-8"%3F>%0A<svg%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"%20viewBox%3D"0%200%2021%209"%20height%3D"9"%20width%3D"21">%0A%20%20%20%20<path%20d%3D"M14.5%205l-4%204-4-4zM14.5%204l-4-4-4%204z"%2F>%0A<%2Fsvg>%0A);
+        background-image: -o-linear-gradient(transparent,transparent),url(/_layout/table/sort_both.png);
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-position: center right;
+        padding-right: 21px;
+        user-select : none;
+      }
+      
+      .table>tbody>tr>th.asc {
+        background-image: url(/_layout/table/sort_up.png);
+        background-image: linear-gradient(transparent,transparent),url(data:image/svg+xml,<%3Fxml%20version%3D"1.0"%20encoding%3D"UTF-8"%3F>%0A<svg%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"%20viewBox%3D"0%200%2021%204"%20height%3D"4"%20width%3D"21">%0A%20%20%20%20<path%20d%3D"M6.5%204l4-4%204%204z"%2F>%0A<%2Fsvg>%0A);
+        background-image: -o-linear-gradient(transparent,transparent),url(/_layout/table/sort_up.png);
+      }
+      
+      .table>tbody>tr>th.desc {
+        background-image: url(/_layout/table/sort_down.png);
+        background-image: linear-gradient(transparent,transparent),url(data:image/svg+xml,<%3Fxml%20version%3D"1.0"%20encoding%3D"UTF-8"%3F>%0A<svg%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"%20viewBox%3D"0%200%2021%204"%20height%3D"4"%20width%3D"21">%0A%20%20%20%20<path%20d%3D"M14.5%200l-4%204-4-4z"%2F>%0A<%2Fsvg>%0A);
+        background-image: -o-linear-gradient(transparent,transparent),url(/_layout/table/sort_down.png);
+      }
+      
+      .table_layout {
+        border-collapse: collapse;
+        border-spacing : 0;
+      }
+      .table_layout>tbody>tr {
+        padding: 0px;
+      }
+      .table_layout>tbody>tr>td {
+        padding: 0px;
+      }
+      
+      html, body {
+        height : 100%;
+        margin : 0px;
+        /* https://la.by/forum/dizayn-i-programmirovanie/samyy-udobnyy-dlya-chteniya-shrift-v-internete */
+        font-family  : Verdana, Arial, Helvetica, sans-serif;
+      }
+      #mount_point {
+        height : 100%
+      }
+      
+      .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+      }
+      
+      .tab a {
+        background-color: inherit;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 2px 16px;
+        transition: 0.3s;
+        color: #000;
+        text-decoration-line: none;
+      }
+      
+      .tab a:hover {
+        background-color: #ddd;
+      }
+      
+      .tab a.active {
+        background-color: #ccc;
+      } 
+      .table>tbody>tr.warning>td {
+        background-color: #fcc;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="mount_point"></div>
+    <script src="./1react.js"></script>
+    <script src="./2react-dom.js"></script>
+    <script src="./bundle.coffee"></script>
+    <script src="./_webcom_emu.js"></script>
+    <script src="./_app_control/mining_calculator_readonly.com.coffee"></script>
+    <script src="./_app_control/mining_calculator_readonly_db.com.coffee"></script>
+    <script src="./_app_control/node_deep_view.com.coffee"></script>
+    <script src="./_app_control/node_deep_view_db.com.coffee"></script>
+    <script src="./_app_control/node_monitor.com.coffee"></script>
+    <script src="./_app_control/node_monitor_db.com.coffee"></script>
+    <script src="./_app_control/onboard.com.coffee"></script>
+    <script src="./_app_control/onboarding.com.coffee"></script>
+    <script src="./_app_control/onboarding_db.com.coffee"></script>
+    <script src="./_app_control/wizard.com.coffee"></script>
+    <script src="./_app_control/wizard_db.com.coffee"></script>
+    <script src="./_basic_control/button/button.com.coffee"></script>
+    <script src="./_basic_control/tab_bar/tab_bar.com.coffee"></script>
+    <script src="./_basic_control/text_input/text_input.com.coffee"></script>
+    <script src="./_layout/table/table.com.coffee"></script>
+    <script src="./_layout/tooltip/tooltip.com.coffee"></script>
+    <script src="./app.com.coffee"></script>
+    <script src="./page/_com/nav.com.coffee"></script>
+    <script src="./page/_com/tab_bar_router.com.coffee"></script>
+    <script src="./page/_com/wrap.com.coffee"></script>
+    <script src="./page/page_dashboard.com.coffee"></script>
+    <script src="./page/page_node.com.coffee"></script>
+    <script src="./page/page_node_monitor.com.coffee"></script>
+    <script src="./page/page_onboarding.com.coffee"></script>
+    <script src="./page/page_wizard.com.coffee"></script>
+    <script src="./page/router.com.coffee"></script>
+    <script src="./router/multi.com.coffee"></script>
+    <script src="./1_init_and_modules/1_iced_runtime.coffee"></script>
+    <script src="./dev_tools_handler.coffee"></script>
+    <script src="./util/fmt.coffee"></script>
+    <script src="./util/format_number.coffee"></script>
+    <script src="./util/time.coffee"></script>
+    <script src="./z_bootstrap.coffee"></script>
+  </body>
+</html>
